@@ -68,7 +68,9 @@ def padding(img):
     p1 = img[:, :, 0]
     p2 = img[:, :, 1]
     p3 = img[:, :, 2]
+    print('------------------------------')
     print("Original dim = ", img.shape)
+    print('------------------------------')
     r, c = p1.shape
     while (r % 16) != 0:
         p1 = np.vstack([p1, p1[-1, :]])
@@ -76,9 +78,10 @@ def padding(img):
         p3 = np.vstack([p3, p3[-1, :]])
         r, c = p1.shape
     while (c % 16) != 0:
-        p1 = np.vstack([p1, p1[:, -1]])
-        p2 = np.vstack([p2, p2[:, -1]])
-        p3 = np.vstack([p3, p3[:, -1]])
+
+        p1 = np.column_stack([p1, p1[:, -1]])
+        p2 = np.column_stack([p2, p2[:, -1]])
+        p3 = np.column_stack([p3, p3[:, -1]])
         r, c = p1.shape
 
     padded_img = np.zeros((r, c, 3), dtype=np.uint8)
@@ -97,7 +100,7 @@ def padding_decoder(img, padded_img):
     nl, nc, color = img.shape
 
     unpadded_img = padded_img[:nl, :nc, :]
-    print("unpadded dim = ", unpadded_img.shape)
+    print("Unpadded dim = ", unpadded_img.shape)
     plt.figure()
     plt.imshow(unpadded_img)
     plt.axis('off')
@@ -158,12 +161,12 @@ def ycbcr_to_rgb(img):
 ###############################################################################################
 def main():
     plt.close('all')
-    img = plt.imread('imagens/barn_mountains.bmp')
+    img = plt.imread('imagens/logo.bmp')
     # channels = codec(img)
     # decodec(channels)
-    # padding_decoder(img, padding(img))
+    padding_decoder(img, padding(img))
     # plot_image_colormap(channels['Red'],map('Red'))
-    ycbcr(img)
+    # ycbcr(img)
     plt.show()
 
 
