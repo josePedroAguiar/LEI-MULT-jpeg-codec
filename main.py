@@ -40,26 +40,41 @@ def get_channels(channels, img, channel):
     channels[rgb[channel]] = img[:, :, channel]
 
 
-def codec(img, channel=None, grey=None):
+def codec(img, channel=None, grey=None,activate_plot=0):
     channels = {}
     rgb = ['Red', 'Green', 'Blue']
-    for color in range(3):
-        get_channels(channels, img, color)
-        if channel is None:
-            plot_image_colormap(channels[rgb[color]], colormap(rgb[color]))
-            plot_image_colormap(channels[rgb[color]], colormap(rgb[color], 1))
-    if channel is not None:
-        plot_image_colormap(channels[channel], colormap(rgb[channel], grey))
-    return channels
+    if(activate_plot==0):
+        for color in range(3):
+            get_channels(channels, img, color)
+            if channel is None:
+                plot_image_colormap(channels[rgb[color]], colormap(rgb[color]))
+                plot_image_colormap(channels[rgb[color]], colormap(rgb[color], 1))
+        if channel is not None:
+            plot_image_colormap(channels[channel], colormap(rgb[channel], grey))
+        plot_image_colormap(padding(img))
+        ycbcr(img,2)
+    elif (activate_plot==1):
+        plot_image_colormap(padding(img))
+        ycbcr(img)
+    elif (activate_plot==2):
+        padding(img)
+        ycbcr(img,activate_plot)
+    else:
+        padding(img)
+        ycbcr(img)
+    return
 
 
-def decodec(channels):
+def decodec(img,channels):
     plt.figure()
     plt.title("Decoder")
     plt.axis('off')
     plt.imshow(np.dstack((channels['Red'],
                           channels['Green'],
                           channels['Blue'])))
+
+
+    #padding_decoder(img, padding(img)):              
     return
 
 
@@ -89,10 +104,6 @@ def padding(img):
     padded_img[:, :, 1] = p2.astype(np.uint8)
     padded_img[:, :, 2] = p3.astype(np.uint8)
     print("Padded dim = ", padded_img.shape)
-    plt.figure()
-    plt.imshow(np.dstack((p1, p2, p3)))
-    plt.axis('off')
-    plt.show()
     return padded_img
 
 
@@ -112,7 +123,7 @@ def padding_decoder(img, padded_img):
 ###############################################################################################
 
 
-def ycbcr(img):
+def ycbcr(img,activate_plot=0):
     """
     plt.figure()
     img = rgb_to_ycbcr(img)
@@ -123,9 +134,9 @@ def ycbcr(img):
     img = ycbcr_to_rgb(img)
     plt.imshow(img)"""
     img = rgb_to_ycbcr(img)
-    for i in range(3):
-        # ycbcr_colormap(i)
-        plot_image_colormap(img[:, :, i], ycbcr_colormap(i))
+    if(activate_plot==2):
+        for i in range(3):
+            plot_image_colormap(img[:, :, i], ycbcr_colormap(i))
 
 
 def ycbcr_colormap(channel):
@@ -180,12 +191,12 @@ def ds_4_2_0():
 ###############################################################################################
 def main():
     plt.close('all')
-    img = plt.imread('imagens/peppers.bmp')
-    #channels = codec(img)
-    # decodec(channels)
-    # padding_decoder(img, padding(img))
+    img = plt.imread('imagens/barn_mountains.bmp')
+    channels = codec(img,activate_plot=2)
+    # decodec(img,channels)
+    #padding_decoder(img, padding(img))
     # plot_image_colormap(channels)
-    ycbcr(img)
+    #ycbcr(img)
     plt.show()
 
 
