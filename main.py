@@ -166,7 +166,7 @@ def main():
     # decodec(channels)
     padding_decoder(img, padding(img))
     # plot_image_colormap(channels['Red'],map('Red'))
-    # ycbcr(img)
+    #ycbcr(img)
     plt.show()
 
 
