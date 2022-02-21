@@ -152,6 +152,7 @@ def ycbcr_to_rgb(img):
     formula = np.linalg.inv(formula)
     rgb = img.astype(float)
     rgb[:, :, [1, 2]] -= 128
+    rgb=rgb.round()
     rgb = rgb.dot(formula.T)  # duvida porque que temos de usar a transposta
     np.putmask(rgb, rgb > 255, 255)
     np.putmask(rgb, rgb < 0, 0)
@@ -159,14 +160,32 @@ def ycbcr_to_rgb(img):
 
 
 ###############################################################################################
+def downsampling():
+    return
+
+
+
+
+def get_dchannels():
+    return
+
+
+def ds_4_2_2():
+    return
+
+def ds_4_2_0():
+    return
+
+
+###############################################################################################
 def main():
     plt.close('all')
-    img = plt.imread('imagens/logo.bmp')
-    # channels = codec(img)
+    img = plt.imread('imagens/peppers.bmp')
+    #channels = codec(img)
     # decodec(channels)
-    padding_decoder(img, padding(img))
-    # plot_image_colormap(channels['Red'],map('Red'))
-    #ycbcr(img)
+    # padding_decoder(img, padding(img))
+    # plot_image_colormap(channels)
+    ycbcr(img)
     plt.show()
 
 
