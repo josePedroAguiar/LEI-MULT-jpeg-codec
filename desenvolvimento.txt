@@ -1,0 +1,12 @@
+5.4- Y com R G B: Ambos são bastante nitidos, isto porque na codificação RGB, os 3 channels vão apresentar redundancia, pois estes apresentam a componente da luminância (Y).
+Cb, cr: São pouco nitidos porque o olho humano não é tão sensivel à crominancia como à luminância;
+
+6.3- A taxa de compressão de 4:2:0 é superior à taxa de compressão da 4:2:2, pois além das colunas serem reduzidas para metade em ambos os downsamplings, a 4:2:0 também reduz as linhas. 
+4:2:0 é mais destrutivo pela mesma razão, 
+
+
+
+7.1.3- O potencial de conversão vai ser menor, no entanto não há tanta destrutividade
+
+7.1.6-
+
